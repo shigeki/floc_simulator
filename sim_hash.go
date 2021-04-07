@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/binary"
+	"log"
 	"math"
 )
 
@@ -24,6 +25,10 @@ func randomGaussian(i uint64, j uint64) float64 {
 	var kTwoPi float64 = 2.0*3.141592653589793
 	rv1 := randomUniform(i, j, g_seed1)
 	rv2 := randomUniform(j, i, g_seed2)
+	if rv1 > 1 || rv1 < 0 || rv2 > 1 || rv2 < 0 {
+		log.Fatal("Invaild random rv1, rv2", rv1, rv2)
+	}
+
 	return math.Sqrt(float64(-2.0)*math.Log(rv1))*math.Cos(kTwoPi*rv2)
 }
 
