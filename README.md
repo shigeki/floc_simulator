@@ -1,7 +1,15 @@
 # FLoC Simulator
 
-## Example
+Command line FLoC simulator to calculate CohortID with using host histories and cluster data.
 
+## Build
+```
+$ go get
+go: downloading golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
+$ go build
+```
+## Example
+To run, The input json file of host list for history data is needed. See domain_list.json file in this repo.
 ```
 $ ./floc_simulator domain_list.json
 domain_list: [nikkei.com hatenablog.com nikkansports.com yahoo.co.jp sponichi.co.jp cnn.co.jp floc.glitch.me ohtsu.org]
