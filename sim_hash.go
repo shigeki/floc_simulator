@@ -5,6 +5,8 @@ import (
 	"math"
 )
 
+type WeightedFeatures map[uint64]int
+
 func randomUniform(i uint64, j uint64, seed uint64) float64 {
 	b_i := make([]byte, 8)
 	b_j := make([]byte, 8)
@@ -26,13 +28,13 @@ func randomGaussian(i uint64, j uint64) float64 {
 }
 
 
-func simHashBits(input []uint64, output_dimention uint8) uint64 {
+func simHashBits(features WeightedFeatures, output_dimention uint8) uint64 {
 	var result uint64 = 0
 	var d uint8;
 	for d = 0; d < output_dimention; d++ {
 		var acc float64 = 0;
-		for _, pos := range input {
-			acc += randomGaussian(uint64(d), pos)
+		for hash, weight := range features {
+			acc += randomGaussian(uint64(d), hash)*float64(weight)
 		}
 		if (acc > 0) {
 			result |= (1 << d)
@@ -43,11 +45,11 @@ func simHashBits(input []uint64, output_dimention uint8) uint64 {
 
 
 func SimHashString(domain_list []string) uint64 {
-	var input []uint64
+	features := make(WeightedFeatures, len(domain_list))
 	for _, domain := range domain_list {
 		hash := CityHash64V103([]byte(domain))
-		input = append(input, hash)
+		features[hash] = 1
 	}
-	sim_hash := simHashBits(input, kMaxNumberOfBitsInFloc)
+	sim_hash := simHashBits(features, kMaxNumberOfBitsInFloc)
 	return sim_hash
 }
