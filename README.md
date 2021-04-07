@@ -13,7 +13,7 @@ Input json file of host list for history data is needed to run. See [host_list.j
 
 Comuputed result below shows the same cohort Id as Chromium that has the history of servers included in host_list.json.
 ```
-$ ./floc_simulator domain_list.json
+$ ./floc_simulator host_list.json
 domain_list: [nikkei.com hatenablog.com nikkansports.com yahoo.co.jp sponichi.co.jp cnn.co.jp floc.glitch.me ohtsu.org]
 sim_hash: 779363756518407
 cohortId: 21454
