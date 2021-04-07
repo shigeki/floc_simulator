@@ -3,7 +3,7 @@
 ## Example
 
 ```
-$ ./floc_simulator
+$ ./floc_simulator domain_list.json
 domain_list: [nikkei.com hatenablog.com nikkansports.com yahoo.co.jp sponichi.co.jp cnn.co.jp floc.glitch.me ohtsu.org]
 sim_hash: 779363756518407
 cohortId: 21454
