@@ -13,6 +13,7 @@ import (
 var kMaxNumberOfBitsInFloc uint8 = 50
 
 func main() {
+	var domain_list []string
 	domain_list, sorting_lsh_cluster_data, err := floc.SetUp()
 	if err != nil {
 		log.Fatal(err)
@@ -20,7 +21,8 @@ func main() {
 	fmt.Println("domain_list:", domain_list)
 	sim_hash := floc.SimHashString(domain_list, kMaxNumberOfBitsInFloc)
 	fmt.Println("sim_hash:", sim_hash)
-	cohortId, err := floc.ApplySortingLsh(sim_hash, sorting_lsh_cluster_data, kMaxNumberOfBitsInFloc)
+	check_sensitiveness := true
+	cohortId, err := floc.ApplySortingLsh(sim_hash, sorting_lsh_cluster_data, kMaxNumberOfBitsInFloc, check_sensitiveness)
 	if err != nil {
 		log.Fatal(err)
 	}

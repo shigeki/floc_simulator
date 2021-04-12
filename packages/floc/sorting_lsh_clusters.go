@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-func ApplySortingLsh(sim_hash uint64, cluster_data []byte, kMaxNumberOfBitsInFloc uint8) (uint64, error) {
+func ApplySortingLsh(sim_hash uint64, cluster_data []byte, kMaxNumberOfBitsInFloc uint8, check_sensiveness bool) (uint64, error) {
 	var kExpectedFinalCumulativeSum uint64 = (1 << kMaxNumberOfBitsInFloc);
 	var kSortingLshMaxBits uint8 = 7
 	var kSortingLshBlockedMask uint8 = 0b1000000
@@ -33,7 +33,7 @@ func ApplySortingLsh(sim_hash uint64, cluster_data []byte, kMaxNumberOfBitsInFlo
 		}
 		
 		if cumulative_sum > sim_hash {
-			if is_blocked != 0 {
+			if check_sensiveness && (is_blocked != 0) {
 				return 0, errors.New("blocked")
 			}
 			return index, nil
