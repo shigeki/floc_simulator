@@ -1,10 +1,10 @@
-package main
+package floc
 
 import (
 	"errors"
 )
 
-func ApplySortingLsh(sim_hash uint64, cluster_data []byte) (uint64, error) {
+func ApplySortingLsh(sim_hash uint64, cluster_data []byte, kMaxNumberOfBitsInFloc uint8) (uint64, error) {
 	var kExpectedFinalCumulativeSum uint64 = (1 << kMaxNumberOfBitsInFloc);
 	var kSortingLshMaxBits uint8 = 7
 	var kSortingLshBlockedMask uint8 = 0b1000000

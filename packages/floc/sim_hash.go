@@ -1,4 +1,4 @@
-package main
+package floc
 
 import (
 	"encoding/binary"
@@ -49,7 +49,7 @@ func simHashBits(features WeightedFeatures, output_dimention uint8) uint64 {
 }
 
 
-func SimHashString(domain_list []string) uint64 {
+func SimHashString(domain_list []string, kMaxNumberOfBitsInFloc uint8) uint64 {
 	features := make(WeightedFeatures, len(domain_list))
 	for _, domain := range domain_list {
 		hash := CityHash64V103([]byte(domain))

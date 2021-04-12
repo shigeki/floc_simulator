@@ -1,4 +1,4 @@
-package main
+package floc
 
 //
 // Most of this code comes from https://github.com/creachadair/cityhash

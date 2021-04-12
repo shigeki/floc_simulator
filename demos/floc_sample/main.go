@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"github.com/shigeki/floc_simulator/packages/floc"
 )
 
 //
@@ -18,7 +19,7 @@ var kMaxNumberOfBitsInFloc uint8 = 50
 func main() {
 	var kFlocIdMinimumHistoryDomainSizeRequired int = 7
 	if len(os.Args) != 2 {
-		log.Fatal("[Usage] floc_simulator domain_list.json")
+		log.Fatal("[Usage] floc_simulator host_list.json")
 	}
 	domain_file := os.Args[1]
 	history_data, err := ioutil.ReadFile(domain_file)
@@ -44,15 +45,15 @@ func main() {
 	fmt.Println("domain_list:", domain_list)
 
 	// cluster data comes from ~/Library/Application\ Support/Google/Chrome\ Canary/Floc/1.0.6/ in MacOS
-	var cluster_file = "./Floc/1.0.6/SortingLshClusters"
+	var cluster_file = "../../Floc/1.0.6/SortingLshClusters"
 	sorting_lsh_cluster_data, err := ioutil.ReadFile(cluster_file)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	sim_hash := SimHashString(domain_list)
+	sim_hash := floc.SimHashString(domain_list, kMaxNumberOfBitsInFloc)
 	fmt.Println("sim_hash:", sim_hash)
-	cohortId, err := ApplySortingLsh(sim_hash, sorting_lsh_cluster_data)
+	cohortId, err := floc.ApplySortingLsh(sim_hash, sorting_lsh_cluster_data, kMaxNumberOfBitsInFloc)
 	if err != nil {
 		log.Fatal(err)
 	}
