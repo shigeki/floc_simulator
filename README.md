@@ -6,8 +6,8 @@ Command line FLoC simulator to calculate CohortID with using host list and clust
 ```
 $ cd
 
-$ cd demos/sample/
-ohtsu@opro:~/github/shigeki/floc_simulator/demos/sample$ go build
+$ cd demos/floc_sample/
+ohtsu@opro:~/github/shigeki/floc_simulator/demos/floc_sample$ go build
 $ go get
 go: downloading golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 $ go build
