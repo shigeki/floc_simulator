@@ -12,6 +12,7 @@ const (
 	k0 = uint64(0xc3a5c85c97cb3127)
 	k1 = uint64(0xb492b66fbe98f273)
 	k2 = uint64(0x9ae16a3b2f90404f)
+	k3 = uint64(0xc949d7c7509e6557)
 )
 
 var fetch64 = binary.LittleEndian.Uint64 // :: []byte -> uint64
@@ -58,9 +59,8 @@ func hash64Len0to16(s []byte) uint64 {
 		return hash64Len16(a, c) ^ b
 	}
 	if n >= 4 {
-		mul := k2 + n*2
 		a := uint64(fetch32(s))
-		return hash64Len16Mul(n+(a<<3), uint64(fetch32(s[n-4:])), mul)
+		return hash64Len16(n+(a<<3), uint64(fetch32(s[n-4:])))
 	}
 	if n > 0 {
 		a := s[0]
@@ -68,7 +68,7 @@ func hash64Len0to16(s []byte) uint64 {
 		c := s[n-1]
 		y := uint32(a) + uint32(b)<<8
 		z := uint32(n) + uint32(c)<<2
-		return shiftMix(uint64(y)*k2^uint64(z)*k0) * k2
+		return shiftMix(uint64(y)*k2^uint64(z)*k3) * k2
 	}
 	return k2
 }
@@ -86,12 +86,11 @@ func hash128to64(lo, hi uint64) uint64 {
 
 func hash64Len17to32(s []byte) uint64 {
 	n := uint64(len(s))
-	mul := k2 + n*2
 	a := fetch64(s) * k1
 	b := fetch64(s[8:])
-	c := fetch64(s[n-8:]) * mul
-	d := fetch64(s[n-16:]) * k2
-	return hash64Len16Mul(ror64(a+b, 43)+ror64(c, 30)+d, a+ror64(b+k2, 18)+c, mul)
+	c := fetch64(s[n-8:]) * k2
+	d := fetch64(s[n-16:]) * k0
+	return hash64Len16(ror64(a -b, 43)+ror64(c, 30)+d, a+ror64(b^k3, 20)-c)
 }
 
 func hash64Len33to64(s []byte) uint64 {
